@@ -1,0 +1,18 @@
+---
+name: Setup shellcheck
+description: Setup latest stable shellcheck version via pre-compiled binary
+author: 5H3LL3H5
+runs:
+    using: composite
+    steps:
+        - id: download-shellcheck
+          run: |
+              cd && \
+              wget "https://github.com/koalaman/shellcheck/releases/download/stable/shellcheck-stable.linux.x86_64.tar.xz"
+          shell: bash
+        - id: extract-shellcheck
+          run: cd && tar xJfv ~/shellcheck-stable.linux.x86_64.tar.xz
+          shell: bash
+        - id: copy-shellcheck
+          run: sudo cp ~/shellcheck-stable/shellcheck /usr/bin
+          shell: bash
