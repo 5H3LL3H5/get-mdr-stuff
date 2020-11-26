@@ -1,0 +1,53 @@
+---
+# .pre-commmit-config.yaml
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+    - repo: git@github.com:pre-commit/pre-commit-hooks
+      rev: 5c5c6c516a22396c5aa3183edb22121e0960a111
+      hooks:
+          - id: trailing-whitespace
+          - id: end-of-file-fixer
+          - id: check-yaml
+          - id: check-json
+          - id: check-added-large-files
+          - id: check-merge-conflict
+          - id: check-symlinks
+          - id: detect-private-key
+    - repo: git@github.com:jumanjihouse/pre-commit-hooks
+      rev: 2.1.4
+      hooks:
+          - id: git-check
+          - id: git-dirty
+          - id: markdownlint
+          - id: shellcheck
+          - id: shfmt
+    - repo: git@github.com:detailyang/pre-commit-shell
+      rev: e8c012bff2260a5ae9646e9c6d7192d8a417914f
+      hooks:
+          - id: shell-lint
+    - repo: git@github.com:adrienverge/yamllint
+      rev: 0f9dffde237bbbc01fc36692c7c45ed8cdaadbc4
+      hooks:
+          - id: yamllint
+            args: ['-d {extends: relaxed, rules: {line-length: disable}}', --strict]
+    - repo: git@github.com:jumanjihouse/pre-commit-hook-yamlfmt
+      rev: 0.1.0
+      hooks:
+          - id: yamlfmt
+            args: [--width, '150']
+    - repo: git@github.com:codespell-project/codespell
+      rev: 99d7ed94c48996509addbcb2a87e2fd8ba6fc8bd
+      hooks:
+          - id: codespell
+    - repo: git@github.com:jorisroovers/gitlint
+      rev: f53e8098f6be113ad87c1491baacddc958b68e59
+      hooks:
+          - id: gitlint
+    - repo: local
+      hooks:
+          - id: spellcheck-on-tests-via-pre-commmiti                              # requires shellcheck in PATH
+            name: run spellcheck on bats files in testfolder during pre-commit
+            language: system
+            entry: bash -c 'shellcheck --shell=bash --severity=style --norc --external-sources test/*.bats'
+            pass_filenames: false
